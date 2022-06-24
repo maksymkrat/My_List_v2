@@ -110,6 +110,13 @@ using My_List_v2.Repository;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "D:\C#\Projects\My_List_v2\_Imports.razor"
+using Microsoft.Extensions.Localization;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/test")]
     public partial class Test : Microsoft.AspNetCore.Components.ComponentBase
     {

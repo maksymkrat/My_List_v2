@@ -111,89 +111,20 @@ using My_List_v2.Repository;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "D:\C#\Projects\My_List_v2\Pages\Compose-words.razor"
-using System.Text;
+#line 15 "D:\C#\Projects\My_List_v2\_Imports.razor"
+using Microsoft.Extensions.Localization;
 
 #line default
 #line hidden
 #nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/compose-words")]
-    public partial class Compose_words : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class Compose_words : Compose_words_razor
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 79 "D:\C#\Projects\My_List_v2\Pages\Compose-words.razor"
-       
-    string ResultStyle ;
-    Random random = new Random();
-    Word mainWord;
-    List<char> resultWord = new List<char>();
-    List<char> mixedСharacters = new List<char>();
-
-    
-
-
-    protected override void OnInitialized()
-    {
-        mainWord = _business.GetRandomWord();
-        char[] arrayChars = mainWord.WordText.ToCharArray();
-        mixedСharacters = arrayChars.OrderBy(x => random.Next()).ToList();
-        resultWord.Clear();
-        ResultStyle = "light";
-    }
-
-    void ResetWord()
-    {
-       OnInitialized();
-        
-    }
-
-    void AddCharForResult(char selectChar)
-    {
-        resultWord.Add(selectChar);
-        mixedСharacters.Remove(selectChar);
-        ResultStyle = "light";
-    }
-
-    void DeleteCharWithResult(char selectChar)
-    {
-        resultWord.Remove(selectChar);
-        mixedСharacters.Add(selectChar);
-        ResultStyle = "light";
-       
-    }
-
-    void CompareWords()
-    {
-        StringBuilder blindWord = new StringBuilder();
-       
-            for (int i = 0; i < resultWord.Count; i++)
-        {
-            blindWord.Append(resultWord[i]);
-        }
-        if (blindWord.ToString().Equals(mainWord.WordText))
-        {
-            ResultStyle = "success";
-           
-            
-
-        }else
-        {
-            ResultStyle = "danger";
-            
-
-        }
-    }
-
-
-#line default
-#line hidden
-#nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IBusinessLogic _business { get; set; }
     }
 }
 #pragma warning restore 1591

@@ -110,6 +110,13 @@ using My_List_v2.Repository;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "D:\C#\Projects\My_List_v2\_Imports.razor"
+using Microsoft.Extensions.Localization;
+
+#line default
+#line hidden
+#nullable disable
     public partial class SurveyPrompt : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

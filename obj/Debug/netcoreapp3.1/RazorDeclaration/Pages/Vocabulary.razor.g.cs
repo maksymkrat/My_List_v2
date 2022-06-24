@@ -110,122 +110,21 @@ using My_List_v2.Repository;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "D:\C#\Projects\My_List_v2\_Imports.razor"
+using Microsoft.Extensions.Localization;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/vocabulary")]
-    public partial class Vocabulary : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class Vocabulary : Vocabulary_razor
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 54 "D:\C#\Projects\My_List_v2\Pages\Vocabulary.razor"
-       
-
-    private List<Word> words = new List<Word>();
-
-    private List<Word> Words
-    {
-        get => words;
-        set
-        {
-            words = value;
-            InvokeAsync(StateHasChanged);
-        }
-    }
-
-    string newWord;
-    string newTranslate;
-    Translater translater;
-    string wordTranslation;
-    string WordForTranslation;
-    Confirmation confirmation;
-    Word wordToBeDelated;
-
-    private async void AddWord()
-    {
-        if (!string.IsNullOrWhiteSpace(newWord) && !String.IsNullOrWhiteSpace(newTranslate))
-        {
-            var result = await _repository.AddWord(new Word()
-            {
-                WordText = newWord.ToLower(),
-                Translation = newTranslate.ToLower()
-            });
-
-            newWord = string.Empty;
-            newTranslate = string.Empty;
-            wordTranslation = string.Empty;
-            if (result)
-            {
-                UpdateWords();
-                StateHasChanged();
-            }
-            else
-            {
-    // TODO do not add word
-            }
-        }
-    }
-
-    private void TranslateWord()
-    {
-        if (!string.IsNullOrWhiteSpace(newWord))
-        {
-            translater = _business.Translate(newWord);
-            wordTranslation = translater.Target.Text;
-            newTranslate = translater.Target.Text;
-            WordForTranslation = translater.Source.Text;
-        }
-    }
-
-    private void DeleteWord(Word word)
-    {
-        wordToBeDelated = word;
-        confirmation.Show();
-    }
-
-    void onConfirm()
-    {
-        _repository.DeleteWordById(wordToBeDelated.Id);
-        confirmation.Hide();
-        UpdateWords();
-        StateHasChanged();
-        wordToBeDelated = null;
-    }
-
-    void onCancel()
-    {
-        confirmation.Hide();
-        wordToBeDelated = null;
-    }
-
-    private void SayWord(Word word)
-    {
-        _business.Speech(word.WordText);
-    }
-
-    protected override void OnInitialized()
-    {
-        UpdateWords();
-    }
-
-    private async void UpdateWords()
-    {
-        Words = await _repository.GetAllWords();
-        StateHasChanged();
-    }
-
-
-
-
-
-
-
-#line default
-#line hidden
-#nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IBusinessLogic _business { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IWordRepository _repository { get; set; }
     }
 }
 #pragma warning restore 1591

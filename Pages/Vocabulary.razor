@@ -1,6 +1,5 @@
 ﻿@page "/vocabulary"
-@inject IWordRepository _repository;
-@inject IBusinessLogic _business;
+@inherits Vocabulary_razor
 
 <div class="container-fluid">
     <div class="row">
@@ -15,16 +14,13 @@
                             <button type="button" class="word btn btn-primary form-control " @onclick="TranslateWord">Translate</button>
                         </div>
                     </div>
-
-                    
-
                     <div class="row mt-2">
                         <div class="col-8">
                             <input class="word form-control border border-dark " placeholder="some translate" @bind="newTranslate"/>
                         </div>
 
                         <div class="col-4">
-                            <button type="button" class="word btn btn-success form-control  " @onclick="AddWord">Add Word</button>
+                            <button type="button" class="word btn btn-success form-control  " @onclick="AddWord">Add word</button>
                         </div>
 
                     </div>
@@ -47,108 +43,6 @@
         </div>
     </div>
 </div>
-<Confirmation @ref="confirmation" onCancel="onCancel" onConfirm="onConfirm">
-    <div class="text-danger"> Do you want ot delete @wordToBeDelated.WordText ?</div>
+<Confirmation @ref="Confirmation" onCancel="onCancel" onConfirm="onConfirm">
+    <div class="text-danger"> Do you want ot delete @WordToBeDelated.WordText ?</div>
 </Confirmation>
-
-@code {
-
-    private List<Word> words = new List<Word>();
-
-    private List<Word> Words
-    {
-        get => words;
-        set
-        {
-            words = value;
-            InvokeAsync(StateHasChanged);
-        }
-    }
-
-    string newWord;
-    string newTranslate;
-    Translater translater;
-    string wordTranslation;
-    string WordForTranslation;
-    Confirmation confirmation;
-    Word wordToBeDelated;
-
-    private async void AddWord()
-    {
-        if (!string.IsNullOrWhiteSpace(newWord) && !String.IsNullOrWhiteSpace(newTranslate))
-        {
-            var result = await _repository.AddWord(new Word()
-            {
-                WordText = newWord.ToLower(),
-                Translation = newTranslate.ToLower()
-            });
-
-            newWord = string.Empty;
-            newTranslate = string.Empty;
-            wordTranslation = string.Empty;
-            if (result)
-            {
-                UpdateWords();
-                StateHasChanged();
-            }
-            else
-            {
-    // TODO do not add word
-            }
-        }
-    }
-
-    private void TranslateWord()
-    {
-        if (!string.IsNullOrWhiteSpace(newWord))
-        {
-            translater = _business.Translate(newWord);
-            wordTranslation = translater.Target.Text;
-            newTranslate = translater.Target.Text;
-            WordForTranslation = translater.Source.Text;
-        }
-    }
-
-    private void DeleteWord(Word word)
-    {
-        wordToBeDelated = word;
-        confirmation.Show();
-    }
-
-    void onConfirm()
-    {
-        _repository.DeleteWordById(wordToBeDelated.Id);
-        confirmation.Hide();
-        UpdateWords();
-        StateHasChanged();
-        wordToBeDelated = null;
-    }
-
-    void onCancel()
-    {
-        confirmation.Hide();
-        wordToBeDelated = null;
-    }
-
-    private void SayWord(Word word)
-    {
-        _business.Speech(word.WordText);
-    }
-
-    protected override void OnInitialized()
-    {
-        UpdateWords();
-    }
-
-    private async void UpdateWords()
-    {
-        Words = await _repository.GetAllWords();
-        StateHasChanged();
-    }
-
-
-
-
-
-
-}

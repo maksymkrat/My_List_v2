@@ -1,13 +1,12 @@
 ﻿@page "/compose-words"
-@using System.Text
-@inject IBusinessLogic _business;
+@inherits Compose_words_razor;
 
-    
+
 <div class="container">
     <div class="row  justify-content-center m-4">
         
         <div class="col-6 main-word">
-            <span>@mainWord.Translation</span>
+            <span>@MainWord.Translation</span>
         </div>
        
 
@@ -49,11 +48,7 @@
        
         </div>
     }
-    
-   
-    
-   
-    
+
     <div class="row ">
         <div class="col-6">
         </div>
@@ -61,81 +56,5 @@
             <button class="btn-next-test " @onclick="ResetWord">Next test</button>
         </div>
     </div>
-    
-    <div class="row ">
-        <div class="col-6">
-        </div>
-        <div class="col-6 text-center">
-            <button class="btn-next-test " @onclick="CompareWords">Verify</button>
-        </div>
-    </div>
-    
 </div>
    
-    @if (mixedСharacters.Count == 0)
-    {
-        CompareWords();
-    }
-@code {
-    string ResultStyle ;
-    Random random = new Random();
-    Word mainWord;
-    List<char> resultWord = new List<char>();
-    List<char> mixedСharacters = new List<char>();
-
-    
-
-
-    protected override void OnInitialized()
-    {
-        mainWord = _business.GetRandomWord();
-        char[] arrayChars = mainWord.WordText.ToCharArray();
-        mixedСharacters = arrayChars.OrderBy(x => random.Next()).ToList();
-        resultWord.Clear();
-        ResultStyle = "light";
-    }
-
-    void ResetWord()
-    {
-       OnInitialized();
-        
-    }
-
-    void AddCharForResult(char selectChar)
-    {
-        resultWord.Add(selectChar);
-        mixedСharacters.Remove(selectChar);
-        ResultStyle = "light";
-    }
-
-    void DeleteCharWithResult(char selectChar)
-    {
-        resultWord.Remove(selectChar);
-        mixedСharacters.Add(selectChar);
-        ResultStyle = "light";
-       
-    }
-
-    void CompareWords()
-    {
-        StringBuilder blindWord = new StringBuilder();
-       
-            for (int i = 0; i < resultWord.Count; i++)
-        {
-            blindWord.Append(resultWord[i]);
-        }
-        if (blindWord.ToString().Equals(mainWord.WordText))
-        {
-            ResultStyle = "success";
-           
-            
-
-        }else
-        {
-            ResultStyle = "danger";
-            
-
-        }
-    }
-
-}

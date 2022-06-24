@@ -1,5 +1,6 @@
 ﻿@page "/words-test"
-@inject IBusinessLogic _business;
+@inherits Words_test_razor;
+
 
 
 
@@ -7,7 +8,7 @@
     <div class="row  d-flex justify-content-center  mb-4">
         
         <div class="col-6  main-word alert-@mainWordStyle">
-            <span class="">@mainWord.WordText</span>
+            <span class="">@MainWord.WordText</span>
         </div>
 
     </div>
@@ -15,7 +16,7 @@
     <div class="row d-flex justify-content-center">
         @for (int i = 0; i < 4; i++)
         {
-            <SelectedWord MainWord="mainWord" TestWord="words[i]" ResultStyle="@resultStyle" styleMainWord="ChangeStyleMainWord"></SelectedWord>
+            <SelectedWord MainWord="MainWord" TestWord="Words[i]" ResultStyle="@resultStyle" styleMainWord="ChangeStyleMainWord"></SelectedWord>
         }
       
     </div>
@@ -32,35 +33,3 @@
 
 </div>
 
-@code {
-    Word mainWord ;
-    List<Word> words;
-    Random rnd = new Random();
-    string resultStyle = "light";
-    string mainWordStyle = "light";
-    int rndWord = 0;
-    
-    
-    protected override void OnInitialized()
-    {
-         
-        words = _business.GetFourWordsForTestWords();
-        mainWord = words.ElementAt(rnd.Next(0, words.Count));
-    }
-    
-
-    void ChangeStyleMainWord(string style)
-    {
-        mainWordStyle = style;
-        
-    }
-
-    void ResetWord()
-    {
-        words = _business.GetFourWordsForTestWords();
-        mainWord = words.ElementAt(rnd.Next(0, words.Count));
-        resultStyle = "light";
-        mainWordStyle = resultStyle;
-    }
-
-}

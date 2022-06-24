@@ -110,52 +110,21 @@ using My_List_v2.Repository;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 15 "D:\C#\Projects\My_List_v2\_Imports.razor"
+using Microsoft.Extensions.Localization;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/words-test")]
-    public partial class Words_test : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class Words_test : Words_test_razor
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
         {
         }
         #pragma warning restore 1998
-#nullable restore
-#line 35 "D:\C#\Projects\My_List_v2\Pages\Words-test.razor"
-       
-    Word mainWord ;
-    List<Word> words;
-    Random rnd = new Random();
-    string resultStyle = "light";
-    string mainWordStyle = "light";
-    int rndWord = 0;
-    
-    
-    protected override void OnInitialized()
-    {
-         
-        words = _business.GetFourWordsForTestWords();
-        mainWord = words.ElementAt(rnd.Next(0, words.Count));
-    }
-    
-
-    void ChangeStyleMainWord(string style)
-    {
-        mainWordStyle = style;
-        
-    }
-
-    void ResetWord()
-    {
-        words = _business.GetFourWordsForTestWords();
-        mainWord = words.ElementAt(rnd.Next(0, words.Count));
-        resultStyle = "light";
-        mainWordStyle = resultStyle;
-    }
-
-
-#line default
-#line hidden
-#nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IBusinessLogic _business { get; set; }
     }
 }
 #pragma warning restore 1591
